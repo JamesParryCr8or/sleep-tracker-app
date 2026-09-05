@@ -1,0 +1,189 @@
+{
+  "brand": {
+    "name": "DREAMSILK",
+    "site": "https://dreamsilk.io",
+    "tagline": "Dream in Silk, Wake in Beauty",
+    "guideTitle": "The Sleep Ritual",
+    "guideSubtitle": "10 tips for deep, restorative sleep — and a 30-night tracker to make them stick",
+    "trackerUrl": "https://dreamsilk.io/pages/sleep-tracker"
+  },
+  "links": {
+    "home": "https://dreamsilk.io",
+    "shopAll": "https://dreamsilk.io/collections/all",
+    "pillowcase": "https://dreamsilk.io/products/silk-pillowcase-dreamsilk",
+    "sleepMask": "https://dreamsilk.io/products/silk-sleep-mask",
+    "blackoutMask": "https://dreamsilk.io/products/blackout-sleep-mask",
+    "scrunchies": "https://dreamsilk.io/products/silk-scrunchies",
+    "skinnyScrunchies": "https://dreamsilk.io/products/silk-skinny-scrunchies"
+  },
+  "intro": {
+    "heading": "Sleep is not the thing you do when the day is finished.",
+    "body": [
+      "It is the thing that decides what kind of day you get to have.",
+      "Most sleep advice arrives as a lecture — a long list of things you are apparently doing wrong, delivered by someone who has clearly never had a 6am alarm, a school run and a full inbox in the same week.",
+      "This is not that. These are ten small, unglamorous changes that genuinely move the needle, ordered so that the easiest wins come first. You do not need to do all ten. Pick three, give them a fortnight, and see what happens.",
+      "Then use the tracker at the back to keep yourself honest. Sleep is a habit, and habits are far easier to keep when you can see them."
+    ]
+  },
+  "tips": [
+    {
+      "n": 1,
+      "title": "Anchor your wake time — not your bedtime",
+      "kicker": "The single highest-leverage change on this list",
+      "body": [
+        "Almost everyone tries to fix their sleep by going to bed earlier. It rarely works, because you cannot force sleepiness that has not arrived yet. You end up lying in the dark, negotiating.",
+        "Your body clock takes its cue from when you get up, not when you lie down. Fix the wake time — the same time, seven days a week, within about 30 minutes — and your bedtime gradually sorts itself out. Sleep pressure builds on a predictable schedule, and you start feeling tired at a sensible hour without trying.",
+        "The hard part is weekends. A long Sunday lie-in shifts your clock the same way a flight to Portugal would, which is precisely why Monday morning feels the way it does. If you need to catch up, cap it at an hour."
+      ],
+      "action": "Set one alarm for the same time every day this week, including Saturday. Do nothing else on this list yet.",
+      "habitKey": "wake",
+      "habitLabel": "Same wake time"
+    },
+    {
+      "n": 2,
+      "title": "Get light in your eyes within an hour of waking",
+      "kicker": "Free, takes ten minutes, works from tomorrow",
+      "body": [
+        "Morning daylight is the signal that starts the clock you set in Tip 1. It tells your brain that the day has begun, which sets the timer on melatonin release roughly 14–16 hours later. No morning signal, no evening sleepiness.",
+        "Outdoor light is dramatically brighter than indoor light — even a grey British morning is many times stronger than your kitchen ceiling. Ten minutes outside beats an hour by the window.",
+        "Take your coffee to the doorstep. Walk to the postbox the long way. Put the bins out slowly and pretend it is mindfulness."
+      ],
+      "action": "Ten minutes outdoors before 9am, without sunglasses. Cloudy still counts.",
+      "habitKey": "light",
+      "habitLabel": "Morning daylight"
+    },
+    {
+      "n": 3,
+      "title": "Give caffeine a curfew",
+      "kicker": "Roughly eight hours before bed",
+      "body": [
+        "Caffeine has a half-life of about five to six hours, which means the 4pm flat white is still a quarter present at midnight, quietly blocking the chemical that makes you feel sleepy.",
+        "Here is the frustrating bit: it often does not stop you falling asleep. It shallows the sleep you do get, trimming the deep slow-wave sleep that does the physical restoration. So you sleep eight hours and still wake up feeling like you have been mildly burgled.",
+        "You do not have to give it up. Just move the last one earlier. If you wake at 6.30am, aim for nothing after 2pm."
+      ],
+      "action": "Pick your caffeine curfew and write it down. Decaf, herbal tea, or a very theatrical glass of water after that.",
+      "habitKey": "caffeine",
+      "habitLabel": "Caffeine curfew kept"
+    },
+    {
+      "n": 4,
+      "title": "Make the room cooler than feels reasonable",
+      "kicker": "Around 16–18°C",
+      "body": [
+        "To fall asleep, your core body temperature has to drop by about a degree. A warm room fights that, which is why you lie there kicking one leg out from under the duvet at 1am.",
+        "Cool the room, then keep yourself comfortable with bedding rather than heat. A warm bath or shower an hour or so before bed helps too, counter-intuitively — blood rushes to the surface of your skin, and the drop afterwards is steeper than if you had done nothing.",
+        "What touches your face matters more than most people realise. Cotton traps warmth and moisture against the skin; silk is far more breathable and does not hold heat in the same way — which is why so many people describe a silk pillowcase as the 'cool side of the pillow, permanently'."
+      ],
+      "action": "Turn the bedroom thermostat down two degrees tonight and flip the pillow to something breathable.",
+      "habitKey": "cool",
+      "habitLabel": "Cool bedroom",
+      "product": {
+        "label": "Shop silk pillowcases",
+        "url": "https://dreamsilk.io/products/silk-pillowcase-dreamsilk",
+        "note": "Naturally temperature-regulating — no more turning the pillow over at 2am."
+      }
+    },
+    {
+      "n": 5,
+      "title": "Get it properly dark",
+      "kicker": "Darker than you think, and no, your curtains are not enough",
+      "body": [
+        "Your eyes contain light receptors whose only job is to tell your brain what time it is. They are exquisitely sensitive, and they do not care that you have your eyes shut — light through closed eyelids still registers.",
+        "Streetlights, standby LEDs, a partner's phone, the 4am summer sunrise: all of it nibbles away at melatonin and lifts you into lighter sleep. This is the most common reason people wake at 5am in June and cannot get back off.",
+        "Blackout blinds are the thorough solution. A well-made sleep mask is the cheap, portable, works-tonight solution — and it comes with you to hotels, night flights and other people's spare rooms."
+      ],
+      "action": "Do a blackout audit tonight: stand in the dark bedroom for two minutes and cover, unplug or turn away every light you can still see.",
+      "habitKey": "dark",
+      "habitLabel": "Room fully dark",
+      "product": {
+        "label": "Shop silk sleep masks",
+        "url": "https://dreamsilk.io/products/silk-sleep-mask",
+        "note": "Silk sits weightlessly on the eye area — no pressure, no creasing, no elastic dragging at your hair."
+      }
+    },
+    {
+      "n": 6,
+      "title": "Build a wind-down that starts an hour before bed",
+      "kicker": "Sleep is a descent, not a light switch",
+      "body": [
+        "Nobody goes from answering emails to unconsciousness in four minutes. Your nervous system needs a runway, and if you do not give it one it will use the first twenty minutes in bed instead — reviewing your finances, your inbox and something mildly embarrassing you said in 2011.",
+        "The content of the ritual matters far less than its repetition. Doing the same three or four things in the same order every night turns them into a cue: the brain learns that this sequence means sleep is coming, and starts the descent before your head touches the pillow.",
+        "Ours looks like this: lights down, screens away, skin and hair prepared, hair tied up in silk, mask on, done. Six minutes. The point is that it never changes."
+      ],
+      "action": "Choose three things and one order. Do them in that order tonight and every night this week.",
+      "habitKey": "winddown",
+      "habitLabel": "Wind-down ritual"
+    },
+    {
+      "n": 7,
+      "title": "Put the screens down before you get in",
+      "kicker": "It is less about blue light than you have been told",
+      "body": [
+        "Screen brightness plays a part, but the bigger problem is what is on the screen. A phone is an engagement machine — it is designed by very clever people to keep you alert, and it is extremely good at its job. Alertness is the opposite of what you are trying to build.",
+        "The compromise that actually survives contact with real life: the phone charges in another room, or at least across the bedroom rather than on the pillow beside you. If you use it as an alarm, buy a £10 clock and be free.",
+        "If you want something to do with your hands, a paper book is the reliable answer. It has no notifications, no autoplay and no strong opinions about your bedtime."
+      ],
+      "action": "Move the phone charger out of arm's reach tonight.",
+      "habitKey": "screens",
+      "habitLabel": "Screens away before bed"
+    },
+    {
+      "n": 8,
+      "title": "If you are awake for more than twenty minutes, get up",
+      "kicker": "The counter-intuitive one that fixes chronic insomnia",
+      "body": [
+        "Lying in bed frustrated teaches your brain that bed is a place for lying awake being frustrated. Do it for enough nights and the bed itself becomes a trigger for alertness — you feel exhausted on the sofa and wide awake the moment you get under the covers.",
+        "The fix is to protect the association. If you are still awake after roughly twenty minutes — no clock-watching, just a rough sense — get up, go to another room, keep the lights low and do something dull. Return only when you feel genuinely sleepy.",
+        "It feels like a punishment for the first few nights. It is the most evidence-backed technique in behavioural sleep medicine, and it works within a couple of weeks."
+      ],
+      "action": "Decide now what your 'boring room' activity will be, so you are not inventing it at 3am."
+    },
+    {
+      "n": 9,
+      "title": "Move your body during the day — and eat earlier than you'd like",
+      "kicker": "Two quieter habits doing a lot of work",
+      "body": [
+        "Regular daytime movement deepens slow-wave sleep and shortens the time it takes to drop off. It does not need to be a workout; a proper walk counts. Just keep anything strenuous a few hours clear of bedtime, since it raises core temperature and adrenaline exactly when you want both falling.",
+        "Large late meals are the other reliable culprit — digestion keeps the body working when it should be powering down, and lying flat on a full stomach invites reflux. Aim to finish eating two to three hours before bed.",
+        "Alcohol deserves its own warning, because it is the great impostor. It is a sedative, so it genuinely helps you fall asleep — then it fragments the second half of the night and suppresses REM. That 4am wake-up after two glasses of wine is not a coincidence."
+      ],
+      "action": "Walk for twenty minutes today. Finish dinner by 8pm if you are in bed at 11pm."
+    },
+    {
+      "n": 10,
+      "title": "Protect what sleep gives you",
+      "kicker": "Eight hours of friction is eight hours of friction",
+      "body": [
+        "You spend about a third of your life with one side of your face pressed into fabric. Cotton has considerably more friction than silk, and it is absorbent — it wicks moisture and skincare away from your skin and drags at your hair as you turn through the night.",
+        "That is the mechanism behind two things everyone accepts as inevitable: morning bed-head, and the sleep creases that take longer to fade each year. Neither is inevitable. They are friction and absorbency, and both are fixable.",
+        "Mulberry silk is smooth, breathable and far less absorbent, so your hair slides rather than snags and your night cream stays where you put it. Tie long hair up in a silk scrunchie rather than a rubber band — no dents, no breakage at the tie point — and you have removed most of the wear a night can do."
+      ],
+      "action": "Swap the pillowcase you sleep on. It is the single change with the most visible morning-after difference.",
+      "habitKey": "silk",
+      "habitLabel": "Silk pillowcase & hair up",
+      "product": {
+        "label": "Shop the full sleep ritual",
+        "url": "https://dreamsilk.io/collections/all",
+        "note": "Pillowcase, sleep mask and scrunchie — the three-piece ritual, in one place."
+      }
+    }
+  ],
+  "habits": [
+    { "key": "wake", "label": "Same wake time", "short": "Wake", "tip": 1 },
+    { "key": "light", "label": "Morning daylight", "short": "Light", "tip": 2 },
+    { "key": "caffeine", "label": "Caffeine curfew", "short": "Caffeine", "tip": 3 },
+    { "key": "cool", "label": "Cool, dark bedroom", "short": "Cool", "tip": "4 & 5" },
+    { "key": "screens", "label": "Screens away", "short": "Screens", "tip": 7 },
+    { "key": "winddown", "label": "Wind-down ritual", "short": "Ritual", "tip": 6 },
+    { "key": "silk", "label": "Silk pillowcase & hair up", "short": "Silk", "tip": 10 }
+  ],
+  "outro": {
+    "heading": "Start with three.",
+    "body": [
+      "Anchor your wake time. Get outside in the morning. Give caffeine a curfew.",
+      "Those three cost nothing and do more than the other seven combined. Log a fortnight in the tracker, then add the rest once they have stopped feeling like effort.",
+      "Sleep well. You have earned it."
+    ]
+  },
+  "disclaimer": "This guide is for general wellbeing and is not medical advice. Persistent insomnia, loud snoring with daytime sleepiness, or sleep that does not improve with these changes are all worth a conversation with your GP — treatable sleep disorders are far more common than people think."
+}
