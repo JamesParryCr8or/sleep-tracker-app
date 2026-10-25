@@ -64,6 +64,8 @@ async function ensureRateLimits(serviceSid, auth) {
       if (!response.ok) {
         const error = new Error("Twilio rate limit setup failed.");
         error.code = data.code;
+        error.detail = typeof data.message === "string" ? data.message.replace(/\+?\d{6,}/g, "[redacted]").slice(0, 180) : "";
+        error.stage = url.includes("/Buckets") ? "buckets" : (fields ? "create-limit" : "list-limits");
         throw error;
       }
       return data;
@@ -97,7 +99,7 @@ async function ensureRateLimits(serviceSid, auth) {
     }
   })().catch(error => {
     rateLimitSetup = undefined;
-    console.error("SMS rate limit setup failed; Twilio code " + (error.code || "unknown") + ".");
+    console.error("SMS rate limit setup failed; Twilio code " + (error.code || "unknown") + "; stage " + (error.stage || "unknown") + "; " + (error.detail || "") + ".");
     throw error;
   });
   return rateLimitSetup;
