@@ -74,10 +74,12 @@ async function sendPhoneCode(phone, req, res) {
       }
     );
     if (!upstream.ok) {
-      console.error("SMS verification provider returned HTTP " + upstream.status + ".");
+      const detail = await upstream.json().catch(() => ({}));
+      console.error("SMS verification provider returned HTTP " + upstream.status + "; Twilio code " + (detail.code || "unknown") + ".");
       const status = upstream.status === 429 ? 429 : 503;
       return res.status(status).json({
         ok: false,
+        providerCode: typeof detail.code === "number" ? detail.code : undefined,
         message: status === 429 ? "Please wait before requesting another code." : "Phone verification is temporarily unavailable.",
       });
     }
