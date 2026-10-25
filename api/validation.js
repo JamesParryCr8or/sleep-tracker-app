@@ -47,6 +47,62 @@ async function verifyEmail(email, res) {
   }
 }
 
+
+let rateLimitSetup;
+async function ensureRateLimits(serviceSid, auth) {
+  if (rateLimitSetup) return rateLimitSetup;
+  rateLimitSetup = (async () => {
+    const base = "https://verify.twilio.com/v2/Services/" + encodeURIComponent(serviceSid) + "/RateLimits";
+    async function request(url, fields) {
+      const response = await fetch(url, {
+        method: fields ? "POST" : "GET",
+        headers: { Authorization: "Basic " + auth, ...(fields ? { "Content-Type": "application/x-www-form-urlencoded" } : {}) },
+        body: fields ? new URLSearchParams(fields) : undefined,
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const error = new Error("Twilio rate limit setup failed.");
+        error.code = data.code;
+        throw error;
+      }
+      return data;
+    }
+    let limits = (await request(base + "?PageSize=100")).rate_limits;
+    if (!Array.isArray(limits)) throw new Error("Unexpected Twilio rate limit response.");
+    for (const name of ["ip", "phone"]) {
+      let limit = limits.find(item => item.unique_name === name);
+      if (!limit) {
+        try {
+          limit = await request(base, { UniqueName: name, Description: "Customer service SMS verification" });
+        } catch (error) {
+          if (error.code !== 60208) throw error;
+          limits = (await request(base + "?PageSize=100")).rate_limits;
+          limit = limits.find(item => item.unique_name === name);
+          if (!limit) throw error;
+        }
+      }
+      const bucketUrl = base + "/" + encodeURIComponent(limit.sid) + "/Buckets";
+      const buckets = (await request(bucketUrl)).buckets;
+      if (!Array.isArray(buckets)) throw new Error("Unexpected Twilio bucket response.");
+      const required = name === "phone" ? [[3600, 5], [30, 1]] : [[3600, 5]];
+      for (const [interval, max] of required) {
+        if (buckets.some(item => Number(item.interval) === interval)) continue;
+        try {
+          await request(bucketUrl, { Interval: String(interval), Max: String(max) });
+        } catch (error) {
+          if (error.code !== 60211) throw error;
+        }
+      }
+    }
+  })().catch(error => {
+    rateLimitSetup = undefined;
+    console.error("SMS rate limit setup failed; Twilio code " + (error.code || "unknown") + ".");
+    throw error;
+  });
+  return rateLimitSetup;
+}
+
 async function sendPhoneCode(phone, req, res) {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const apiKey = process.env.TWILIO_API_KEY;
@@ -64,6 +120,7 @@ async function sendPhoneCode(phone, req, res) {
   });
   try {
     const auth = Buffer.from(apiKey + ":" + apiSecret).toString("base64");
+    await ensureRateLimits(serviceSid, auth);
     const upstream = await fetch(
       "https://verify.twilio.com/v2/Services/" + encodeURIComponent(serviceSid) + "/Verifications",
       {
@@ -80,7 +137,6 @@ async function sendPhoneCode(phone, req, res) {
       return res.status(status).json({
         ok: false,
         providerCode: typeof detail.code === "number" ? detail.code : undefined,
-        providerDetail: typeof detail.message === "string" ? detail.message.replace(/\+?\d{6,}/g, "[redacted]").slice(0, 180) : undefined,
         message: status === 429 ? "Please wait before requesting another code." : "Phone verification is temporarily unavailable.",
       });
     }
