@@ -1,5 +1,5 @@
-const crypto = require("node:crypto");
-const { applyCors, methodNotAllowed, jsonBody } = require("../lib/validation");
+import crypto from "node:crypto";
+import { applyCors, methodNotAllowed, jsonBody } from "../lib/validation.js";
 
 function hash(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
@@ -129,7 +129,7 @@ async function checkPhoneCode(phone, code, res) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (!applyCors(req, res)) return res.status(403).json({ ok: false, message: "Request origin not allowed." });
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST") return methodNotAllowed(res);
@@ -156,4 +156,4 @@ module.exports = async function handler(req, res) {
     return checkPhoneCode(phone, code, res);
   }
   return res.status(400).json({ ok: false, message: "Unknown validation action." });
-};
+}
