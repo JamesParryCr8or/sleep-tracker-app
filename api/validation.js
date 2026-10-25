@@ -1,3 +1,5 @@
+import { emailResult } from "../lib/email-validation.js";
+import { issuePhoneProof } from "../lib/phone-proof.js";
 import crypto from "node:crypto";
 import { applyCors, methodNotAllowed, jsonBody } from "../lib/validation.js";
 
@@ -10,43 +12,6 @@ function clientIp(req) {
   if (typeof forwarded === "string" && forwarded.trim()) return forwarded.split(",")[0].trim();
   return typeof req.headers["x-real-ip"] === "string" ? req.headers["x-real-ip"].trim() : "";
 }
-
-async function verifyEmail(email, res) {
-  const token = process.env.GHL_PIT_TOKEN;
-  const locationId = process.env.GHL_LOCATION_ID;
-  if (!token || !locationId) {
-    console.error("Email verification is missing server configuration.");
-    return res.status(200).json({ ok: true, status: "unverified" });
-  }
-  try {
-    const url = new URL("https://services.leadconnectorhq.com/email/verify");
-    url.searchParams.set("locationId", locationId);
-    const upstream = await fetch(url, {
-      method: "POST",
-      headers: { Authorization: "Bearer " + token, Version: "v3", "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "email", verify: email }),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!upstream.ok) {
-      console.error("Email verification provider returned HTTP " + upstream.status + ".");
-      return res.status(200).json({ ok: true, status: "unverified" });
-    }
-    const result = await upstream.json();
-    if (result.verified === false) return res.status(200).json({ ok: true, status: "unverified" });
-    const category = typeof result.result === "string" ? result.result : "unknown";
-    const recommended = result.leadConnectorRecommendation?.isEmailValid ?? result.isEmailValid;
-    const rejected = ["undeliverable", "do_not_send"].includes(category) || recommended === false;
-    return res.status(200).json({
-      ok: !rejected,
-      status: category,
-      message: rejected ? "Please check your email address." : undefined,
-    });
-  } catch (error) {
-    console.error("Email verification provider request failed.");
-    return res.status(200).json({ ok: true, status: "unverified" });
-  }
-}
-
 
 let rateLimitSetup;
 async function ensureRateLimits(serviceSid, auth) {
@@ -182,6 +147,7 @@ async function checkPhoneCode(phone, code, res) {
     return res.status(200).json({
       ok: approved,
       status: approved ? "approved" : "pending",
+      verificationToken: approved ? issuePhoneProof(phone) : undefined,
       message: approved ? undefined : "That code is not correct or has expired.",
     });
   } catch (error) {
@@ -202,7 +168,7 @@ export default async function handler(req, res) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
       return res.status(400).json({ ok: false, status: "invalid", message: "Please check your email address." });
     }
-    return verifyEmail(email, res);
+    return res.status(200).json(await emailResult(email));
   }
   if (body.action === "phone-send" || body.action === "phone-check") {
     const phone = typeof body.phone === "string" ? body.phone.trim() : "";
@@ -218,3 +184,4 @@ export default async function handler(req, res) {
   }
   return res.status(400).json({ ok: false, message: "Unknown validation action." });
 }
+
