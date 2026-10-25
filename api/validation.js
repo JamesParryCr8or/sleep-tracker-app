@@ -72,7 +72,7 @@ async function ensureRateLimits(serviceSid, auth) {
     }
     let limits = (await request(base + "?PageSize=100")).rate_limits;
     if (!Array.isArray(limits)) throw new Error("Unexpected Twilio rate limit response.");
-    for (const name of ["ip", "phone"]) {
+    for (const name of ["end_user_ip", "phone_number"]) {
       let limit = limits.find(item => item.unique_name === name);
       if (!limit) {
         try {
@@ -87,7 +87,7 @@ async function ensureRateLimits(serviceSid, auth) {
       const bucketUrl = base + "/" + encodeURIComponent(limit.sid) + "/Buckets";
       const buckets = (await request(bucketUrl)).buckets;
       if (!Array.isArray(buckets)) throw new Error("Unexpected Twilio bucket response.");
-      const required = name === "phone" ? [[3600, 5], [30, 1]] : [[3600, 5]];
+      const required = name === "phone_number" ? [[3600, 5], [30, 1]] : [[3600, 5]];
       for (const [interval, max] of required) {
         if (buckets.some(item => Number(item.interval) === interval)) continue;
         try {
@@ -118,7 +118,7 @@ async function sendPhoneCode(phone, req, res) {
   const form = new URLSearchParams({
     To: phone,
     Channel: "sms",
-    RateLimits: JSON.stringify({ ip: hash(ip), phone: hash(phone) }),
+    RateLimits: JSON.stringify({ end_user_ip: hash(ip), phone_number: hash(phone) }),
   });
   try {
     const auth = Buffer.from(apiKey + ":" + apiSecret).toString("base64");
