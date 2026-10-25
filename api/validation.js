@@ -80,6 +80,7 @@ async function sendPhoneCode(phone, req, res) {
       return res.status(status).json({
         ok: false,
         providerCode: typeof detail.code === "number" ? detail.code : undefined,
+        providerDetail: typeof detail.message === "string" ? detail.message.replace(/\+?\d{6,}/g, "[redacted]").slice(0, 180) : undefined,
         message: status === 429 ? "Please wait before requesting another code." : "Phone verification is temporarily unavailable.",
       });
     }
