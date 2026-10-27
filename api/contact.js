@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     }, "message note");
     if (!note.note?.id) throw new Error("GHL note ID missing.");
     const enrollment = await ghl(contactPath + "/workflow/fe426647-dada-4e90-88aa-3868a0e2c873", {
-      eventStartTime: new Date().toISOString(),
+      eventStartTime: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
     }, "workflow enrollment");
     if (enrollment.succeeded !== true && enrollment.succeded !== true) {
       console.error("Customer service workflow enrollment was not acknowledged.");
