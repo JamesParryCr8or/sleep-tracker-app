@@ -101,10 +101,15 @@ async function sendPhoneCode(phone, req, res) {
       const detail = await upstream.json().catch(() => ({}));
       console.error("SMS verification provider returned HTTP " + upstream.status + "; Twilio code " + (detail.code || "unknown") + ".");
       const status = upstream.status === 429 ? 429 : 503;
+      const retryHeader = Number(upstream.headers.get("retry-after"));
+      const retryAfter = Number.isFinite(retryHeader) && retryHeader > 0 ? Math.min(3600, Math.ceil(retryHeader)) : 60;
+      if (status === 429) res.setHeader("Retry-After", String(retryAfter));
       return res.status(status).json({
         ok: false,
+        code: status === 429 ? "sms_rate_limited" : "sms_unavailable",
+        retryAfter: status === 429 ? retryAfter : undefined,
         providerCode: typeof detail.code === "number" ? detail.code : undefined,
-        message: status === 429 ? "Please wait before requesting another code." : "Phone verification is temporarily unavailable.",
+        message: status === 429 ? "Too many verification code requests. No new SMS was sent. If you already received a code, try verifying with it. Wait at least a minute before retrying; repeated requests can reach the five-per-hour limit for your phone number or internet connection. If that limit has been reached, allow up to an hour for it to reset." : "Phone verification is temporarily unavailable.",
       });
     }
     const verification = await upstream.json();
