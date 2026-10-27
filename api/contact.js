@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     return response.json();
   }
   try {
-    const saved = await ghl("/contacts/upsert", { locationId, firstName, lastName, email, phone, source: "Contact Us Page - dreamsilk.io", createNewIfDuplicateAllowed: false }, "contact upsert");
+    const saved = await ghl("/contacts/upsert", { locationId, firstName, lastName, email, phone, source: "Contact Us Page - dreamsilk.io", customFields: [{ key: "customer_service_request", fieldValue: message }], createNewIfDuplicateAllowed: false }, "contact upsert");
     if (!saved.contact?.id) throw new Error("GHL contact ID missing.");
     const contactPath = "/contacts/" + encodeURIComponent(saved.contact.id);
     await ghl(contactPath + "/tags", { tags: ["customer service"] }, "tag");
