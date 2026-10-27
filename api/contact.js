@@ -31,8 +31,14 @@ export default async function handler(req, res) {
       method: "POST", headers, body: JSON.stringify(payload), signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) {
-      console.error("Customer service GHL " + stage + " returned HTTP " + response.status + ".");
-      throw new Error("Customer service save failed.");
+      const detail = await response.json().catch(() => ({}));
+      const reason = [detail.message, detail.error].flat().filter(value => typeof value === "string").join("; ")
+        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[email]")
+        .replace(/\+?\d{7,}/g, "[number]").slice(0, 500);
+      console.error("Customer service GHL " + stage + " returned HTTP " + response.status + "; " + reason);
+      const error = new Error("Customer service save failed.");
+      error.stage = stage;
+      throw error;
     }
     return response.json();
   }
@@ -56,8 +62,11 @@ export default async function handler(req, res) {
       throw new Error("GHL workflow enrollment failed.");
     }
     return res.status(200).json({ ok: true, emailValidationStatus: checked.status, workflowEnrolled: true });
-  } catch {
-    console.error("Customer service request could not be saved.");
+  } catch (error) {
+    console.error("Customer service request could not be completed.");
+    if (error.stage === "workflow enrollment") {
+      return res.status(503).json({ ok: false, code: "workflow_enrollment_failed", message: "Your message was saved, but the support notification could not be completed. Your details are still here." });
+    }
     return res.status(503).json({ ok: false, message: "Your message could not be saved. Your details are still here; please try again shortly." });
   }
 }
