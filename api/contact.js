@@ -48,7 +48,14 @@ export default async function handler(req, res) {
         "\n\n" + message,
     }, "message note");
     if (!note.note?.id) throw new Error("GHL note ID missing.");
-    return res.status(200).json({ ok: true, emailValidationStatus: checked.status });
+    const enrollment = await ghl(contactPath + "/workflow/fe426647-dada-4e90-88aa-3868a0e2c873", {
+      eventStartTime: new Date().toISOString(),
+    }, "workflow enrollment");
+    if (enrollment.succeeded !== true && enrollment.succeded !== true) {
+      console.error("Customer service workflow enrollment was not acknowledged.");
+      throw new Error("GHL workflow enrollment failed.");
+    }
+    return res.status(200).json({ ok: true, emailValidationStatus: checked.status, workflowEnrolled: true });
   } catch {
     console.error("Customer service request could not be saved.");
     return res.status(503).json({ ok: false, message: "Your message could not be saved. Your details are still here; please try again shortly." });
